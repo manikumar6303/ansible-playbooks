@@ -1,0 +1,33 @@
+---
+# tasks file for fs_setup
+-  name: partition the disk
+   parted:
+          device: '{{ device_name }}'
+          label: gpt 
+          number: 1 
+          part_type: primary
+          part_start: 0%
+          part_end: 100%
+          flags: [ lvm ]
+          state: present
+-  name: configuring volume groups
+   lvg:
+       vg: '{{ volume_group }}'
+       pvs: '{{ device_name }}1' 
+       state: present
+-  name: configuring logical volumes
+   lvol:
+        vg: '{{ volume_group }}'
+        lv: '{{ logical_volume }}'
+        size: 100%FREE
+        state: present
+-  name: configuring file systems
+   filesystem:
+              dev: '/dev/{{ volume_group }}/{{ logical_volume }}'
+              fstype: xfs
+-  name: mounting the file system
+   mount:
+         path: '{{ mount_path }}'
+         src: '/dev/{{ volume_group }}/{{ logical_volume }}'
+         fstype: xfs
+         state: mounted

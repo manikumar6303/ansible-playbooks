@@ -1,0 +1,8 @@
+---
+# vars file for kernel_parameter_setup_reverse
+parameters:
+           - {param: 'vm.swappiness', val: '30'}
+           - {param: 'vm.overcommit_memory', val: '0'}
+           - {param: 'vm.overcommit_ratio', val: '50'}
+           - {param: 'vm.page-cluster', val: '3'}
+           - {param: 'vm.panic_on_oom', val: '0'}

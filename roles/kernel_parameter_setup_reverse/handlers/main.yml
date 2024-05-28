@@ -1,0 +1,4 @@
+---
+# handlers file for kernel_parameter_setup_reverse
+- name: reloading the configuration file
+  shell: sysctl -p /etc/sysctl.conf

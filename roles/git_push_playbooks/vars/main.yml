@@ -1,0 +1,10 @@
+---
+# vars file for git_push_playbooks
+source_path: /etc/ansible/roles
+destination_path: /tmp/plays
+repo_path: https://github.com/manikumar6303/ansible-playbooks.git
+git_params:
+           - {name: 'user.name', value: 'manikumar6303'}
+           - {name: 'user.email', value: 'veeramanikumarvasamsetti@outlook.com'}
+           - {name: 'alias.s', value: 'status'}
+           - {name: 'credential.helper', value: 'store'}

@@ -1,0 +1,6 @@
+---
+# vars file for remote_git
+paths:
+      - {source_path: '/opt/git/ansible-repo1/httpd.conf', destination_path: '/etc/httpd/conf/httpd.conf'}
+      - {source_path: '/opt/git/ansible-repo1/index.html', destination_path: '/var/www/html/index.html'}
+      - {source_path: '/opt/git/ansible-repo1/sysctl.conf', destination_path: '/etc/sysctl.conf'}

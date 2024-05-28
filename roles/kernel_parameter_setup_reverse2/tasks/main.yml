@@ -1,0 +1,7 @@
+---
+# tasks file for kernel_parameter_setup_reverse2
+- name: modifying the kernel parameters
+  copy:
+       src: files/{{source_file}}
+       dest: '{{destination_file}}'
+  notify: reloading the configuration file

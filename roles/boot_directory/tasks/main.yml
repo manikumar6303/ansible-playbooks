@@ -1,0 +1,8 @@
+---
+# tasks file for boot_directory
+- name: archiving the {{source_path}} directory
+  archive:
+           path: '{{source_path}}'
+           dest: '{{destination_path}}{{source_path}}.tar.gz'
+           format: gz
+           force_archive: true

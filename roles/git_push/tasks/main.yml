@@ -1,0 +1,28 @@
+---
+# tasks file for git_push
+- name: git inialize in {{destination_path}}
+  shell: cd {{destination_path}}; git init
+- name: git config
+  shell: cd {{destination_path}}; git config {{item.name}} {{item.value}}
+  with_items: '{{git_params}}'
+- name: git remote add
+  shell: cd {{destination_path}}; git remote add origin {{repo_path}}
+- name: git pull
+  git:
+      repo: '{{repo_path}}'
+      dest: '{{destination_path}}'
+      update: yes
+      version: main
+- name: copying the files
+  copy:
+       src: '{{item.file}}'
+       dest: '{{destination_path}}'
+  with_items: '{{source_path}}'
+- name: git add in {{destination_path}}
+  shell: cd {{destination_path}}; git add -A
+- name: git commit in {{destination_path}}
+  become: yes
+  shell: cd {{destination_path}}; git commit -m "added new file to repository through ansible"
+- name: git push
+  become: yes
+  shell: cd {{destination_path}}; git push origin main

@@ -1,0 +1,13 @@
+---
+# vars file for git_push
+source_path: 
+            - {file: '/etc/httpd/conf/httpd.conf'}
+            - {file: '/etc/sysctl.conf'}
+            - {file: '/var/www/html/index.html'}
+destination_path: /tmp/veera
+repo_path: https://github.com/manikumar6303/git_push.git
+git_params:
+           - {name: 'user.name', value: 'manikumar6303'}
+           - {name: 'user.email', value: 'veeramanikumarvasamsetti@outlook.com'}
+           - {name: 'alias.s', value: 'status'}
+           - {name: 'credential.helper', value: 'store'}

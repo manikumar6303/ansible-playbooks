@@ -1,0 +1,4 @@
+---
+# vars file for boot_directory
+source_path: /boot
+destination_path: /tmp/kumar

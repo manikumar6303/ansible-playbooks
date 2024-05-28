@@ -1,0 +1,15 @@
+---
+# tasks file for kernel_parameter_setup_reverse
+- name: removing old entries in /etc/sysctl.conf
+  lineinfile:
+             path: /etc/sysctl.conf
+             regexp: 'vm'
+             state: absent
+- name: adding new entries into /etc/sysctl.conf
+  sysctl:
+         name: '{{item.param}}'
+         value: '{{item.val}}'
+         sysctl_file: /etc/sysctl.conf
+         state: present
+  with_items: '{{parameters}}'
+  notify: reloading the configuration file

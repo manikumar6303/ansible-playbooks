@@ -1,0 +1,15 @@
+---
+# tasks file for user_setup
+-  name: creating a group
+   group:
+         name: '{{group_name}}'
+         gid: '{{group_id}}'
+         state: present
+-  name: creating a user
+   user:
+        name: '{{user_name}}'
+        uid: '{{user_id}}'
+        group: '{{group_name}}'
+        password: "{{ user_password | password_hash('sha512') }}"
+        comment: '{{user_name}}@outlook.com'
+        state: present

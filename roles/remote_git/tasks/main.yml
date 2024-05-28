@@ -1,0 +1,11 @@
+---
+# tasks file for remote_git
+- name: cloning the files from remote git repository
+  git:
+      repo: https://github.com/manikumar6303/ansible-repo1.git
+      dest: /opt/git/ansible-repo1
+- name: overriding the files
+  copy:
+       src: '{{item.source_path}}'
+       dest: '{{item.destination_path}}'
+  with_items: '{{paths}}'

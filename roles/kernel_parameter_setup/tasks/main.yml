@@ -1,0 +1,7 @@
+---
+# tasks file for kernel_parameter_setup
+-  name: copying a files/{{source_file}} configuration file
+   copy:
+        src: files/{{source_file}}
+        dest: '{{destination_path}}'
+   notify: reloading the configuration file

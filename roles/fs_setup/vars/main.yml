@@ -1,0 +1,6 @@
+---
+# vars file for fs_setup
+device_name: /dev/sdb
+volume_group: oravg
+logical_volume: oralv 
+mount_path: /oradata 

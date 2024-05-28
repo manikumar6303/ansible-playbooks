@@ -1,0 +1,4 @@
+---
+# vars file for kernel_parameter_setup_reverse2
+source_file: sysctl.conf
+destination_file: /etc/sysctl.conf

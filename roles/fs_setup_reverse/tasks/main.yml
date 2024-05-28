@@ -1,0 +1,22 @@
+---
+# tasks file for fs_setup_reverse
+-  name: unmounting the file system
+   mount:
+         path: '{{mount_path}}'
+         state: absent
+-  name: removing the logical volume
+   lvol:
+        vg: '{{volume_group}}'
+        lv: '{{logical_volume}}'
+        state: absent
+        force: yes
+-  name: removing the volume groups
+   lvg:
+       vg: '{{volume_group}}'
+       pvs: '{{device_path}}1'
+       state: absent
+-  name: Removing the partitions of {{device_path}} disk
+   parted:
+          device: '{{device_path}}'
+          number: 1
+          state: absent

@@ -1,0 +1,4 @@
+---
+# vars file for kernel_parameter_setup
+source_file: sysctl.conf
+destination_path: /etc/sysctl.conf

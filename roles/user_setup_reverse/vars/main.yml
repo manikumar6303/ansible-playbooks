@@ -1,0 +1,4 @@
+---
+# vars file for user_setup_reverse
+user_name: oracle
+group_name: dba

@@ -1,0 +1,12 @@
+---
+- name: Example of Varibles
+  hosts: localhost
+  gather_facts: no 
+  vars:
+      - port:
+            - {ser: 'http', p: '80'}
+            - {ser: 'https', p: '443'}
+  tasks:
+        -  name: showing the variable values
+           debug: 
+                msg: "service is {{port[0][0] and port is {{port[0][1]}}}}"

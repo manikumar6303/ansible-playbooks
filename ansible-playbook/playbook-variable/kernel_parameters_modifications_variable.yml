@@ -1,0 +1,18 @@
+---
+- name: Kernel Parameters Modification
+  hosts: appserv, dbserv, webserv
+  remote_user: ansadmin
+  become: true
+  vars_files:
+            - kernel_variable.yml
+  tasks:
+        -  name: modifying kernel parameter
+           sysctl:
+                  name: '{{item.p1}}'
+                  value: '{{item.v1}}'
+                  sysctl_file: /etc/sysctl.conf
+                  reload: yes
+                  state: present
+           with_items:
+                     - '{{param}}'   
+       

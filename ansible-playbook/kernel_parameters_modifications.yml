@@ -1,0 +1,41 @@
+---
+- name: Kernel Parameters Modification
+  hosts: appserv, dbserv, webserv
+  remote_user: ansadmin
+  become: true
+  tasks:
+        -  name: modifying kernel parameter vm.swappiness
+           sysctl:
+                  name: vm.swappiness
+                  value: '40'
+                  sysctl_file: /etc/sysctl.conf
+                  reload: yes
+                  state: present
+        -  name: modifying kernel parameter vm.overcommit_memory
+           sysctl:
+                  name: vm.overcommit_memory
+                  value: '1'
+                  sysctl_file: /etc/sysctl.conf
+                  reload: yes
+                  state: present
+        -  name: modifying kernel parameter vm.overcommit_ratio
+           sysctl:
+                  name: vm.overcommit_ratio
+                  value: '60'
+                  sysctl_file: /etc/sysctl.conf
+                  reload: yes
+                  state: present
+        -  name: modifying kernel parameter vm.page-cluster
+           sysctl:
+                  name: vm.page-cluster
+                  value: '4'
+                  sysctl_file: /etc/sysctl.conf
+                  reload: yes
+                  state: present
+        -  name: modifying kernel parameter vm.panic_on_oom
+           sysctl:
+                  name: vm.panic_on_oom
+                  value: '1'
+                  sysctl_file: /etc/sysctl.conf
+                  reload: yes
+                  state: present

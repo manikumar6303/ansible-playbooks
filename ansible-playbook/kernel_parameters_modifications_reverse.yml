@@ -1,0 +1,38 @@
+---
+- name: Kernel Parameters Modification
+  hosts: ownserver, clients
+  remote_user: ansadmin
+  become: true
+  tasks:
+        -  name: modifying kernel parameter vm.swappiness
+           sysctl:
+                  name: vm.swappiness
+                  sysctl_file: /etc/sysctl.conf
+                  state: absent
+                  reload: yes
+        -  name: modifying kernel parameter vm.overcommit_memory
+           sysctl:
+                  name: vm.overcommit_memory
+                  sysctl_file: /etc/sysctl.conf
+                  state: absent
+                  reload: yes
+        -  name: modifying kernel parameter vm.overcommit_ratio
+           sysctl:
+                  name: vm.overcommit_ratio
+                  sysctl_file: /etc/sysctl.conf
+                  state: absent
+                  reload: yes
+        -  name: modifying kernel parameter vm.page-cluster
+           sysctl:
+                  name: vm.page-cluster
+                  sysctl_file: /etc/sysctl.conf
+                  state: absent
+                  reload: yes
+        -  name: modifying kernel parameter vm.panic_on_oom
+           sysctl:
+                  name: vm.panic_on_oom
+                  sysctl_file: /etc/sysctl.conf
+                  state: absent
+                  reload: yes
+        -  name: updating the kernel Parameters
+           shell: sysctl -p /etc/sysctl.conf

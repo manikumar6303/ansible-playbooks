@@ -1,0 +1,20 @@
+---
+- name: Example of Varibles
+  hosts: clients
+  gather_facts: no 
+  vars: 
+       http_port: 80
+       user: mani
+       path: /tomcat
+  tasks:
+      -  name: show variable values
+         debug:
+            msg: "port is {{http_port}}{{user}}, username is {{user}}, path is {{path}}"
+
+- name: Example of Varibles
+  hosts: webserv
+  gather_facts: no 
+  tasks:
+      -  name: show variable values
+         debug:
+            msg: "port is {{http_port}}, username is {{user}}, path is {{path}}"

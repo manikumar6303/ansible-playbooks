@@ -1,0 +1,7 @@
+---
+- name: boot directory backup
+  hosts: ownserver
+  remote_user: ansadmin
+  become: true
+  roles:
+        - boot_directory

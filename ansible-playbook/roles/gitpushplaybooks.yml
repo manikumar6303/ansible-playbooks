@@ -1,0 +1,7 @@
+---
+- name: git push playbooks
+  hosts: ownserver
+  remote_user: ansadmin
+  become: true
+  roles:
+        - git_push_playbooks

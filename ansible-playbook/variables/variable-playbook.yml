@@ -1,0 +1,12 @@
+---
+- name: Examples of Varibles
+  hosts: localhost
+  gather_facts: no
+  become: true
+  vars:
+      username: mani
+  tasks: 
+        -  name: add the user {{ username }}
+           user:
+                state: present
+                name: '{{ username }}'

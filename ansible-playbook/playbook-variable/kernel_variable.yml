@@ -1,0 +1,6 @@
+- param:
+      - {p1: 'vm.swappiness', v1: '40'}
+      - {p1: 'vm.overcommit_memory', v1: '1'}
+      - {p1: 'vm.overcommit_ratio', v1: '60'}
+      - {p1: 'vm.page-cluster', v1: '4'}
+      - {p1: 'vm.panic_on_oom', v1: '1'}

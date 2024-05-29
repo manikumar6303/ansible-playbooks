@@ -1,0 +1,20 @@
+---
+- name: Example of Varibles
+  hosts: localhost
+  gather_facts: no 
+  vars:
+        http_port:
+              - app_port: 443
+              - ora_port: 1046
+        user: 
+              user_1: admin
+              user_2: mani
+        path: /tmp/oracle
+
+  tasks:
+      -  name: show variable values for {{user.user_1}}
+         debug:
+            msg: "port is {{http_port[0]['app_port']}}, username is {{user.user_1}}, path is {{path}}"
+      -  name: show variable values for {{user.user_2}}
+         debug:
+            msg: "port is {{http_port[1]['ora_port']}}, username is {{user.user_2}}, path is {{path}}"

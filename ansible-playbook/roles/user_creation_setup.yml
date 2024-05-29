@@ -1,0 +1,7 @@
+---
+- name: user creation
+  hosts: mani-ans-client2
+  remote_user: ansadmin
+  become: true
+  roles: 
+        - user_setup

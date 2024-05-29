@@ -1,0 +1,16 @@
+---
+- name: Removing A User
+  hosts: appserv, dbserv, webserv
+  remote_user: ansadmin
+  become: true
+  tasks:
+        -  name: Removing the ashok User
+           user:
+                name: ashok 
+                remove: yes
+                state: absent
+        -  name: Removing the ashok user
+           group: 
+                 name: ashok
+                 state: absent        
+      

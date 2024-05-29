@@ -1,0 +1,22 @@
+---
+- name: change permissions and ownership, group membership of a directory
+  hosts: appserv
+  remote_user: ansadmin
+  become: true
+  vars:
+        user:
+            usr: ansadmin
+            grp: ansadmin
+            dir: /ansible-playbook/playbook-variable
+            per: 0777
+  tasks: 
+        -  name: changing {{user.dir}} permissions
+           file:
+                path: '{{user.dir}}'
+                mode: '{{user.per}}'
+        -  name: changing ownership
+           file:
+                path: '{{user.dir}}'
+                recurse: yes
+                owner: '{{user.usr}}'
+                group: '{{user.grp}}'

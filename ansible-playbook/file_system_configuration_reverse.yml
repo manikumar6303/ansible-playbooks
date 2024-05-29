@@ -1,0 +1,26 @@
+---
+- name: File System configuration reverse 
+  hosts: clients
+  remote_user: ansadmin
+  become: true
+  tasks:
+        -  name: unmounting the file system
+           mount:
+                 path: /oradata
+                 state: absent
+        -  name: removing the logical volume
+           lvol:
+                vg: oravg
+                lv: oralv
+                state: absent
+                force: yes
+        -  name: removing the volume groups
+           lvg:
+               vg: datavg
+               pvs: /dev/sdb1
+               state: absent
+        -  name: Removing the partitions of /dev/sdb disk
+           parted:
+                  device: /dev/sdb
+                  number: 1
+                  state: absent

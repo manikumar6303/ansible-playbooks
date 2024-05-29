@@ -1,0 +1,7 @@
+---
+- name: clone remote git 
+  hosts: ownserver
+  remote_user: ansadmin
+  become: true
+  roles:
+        - remote_git

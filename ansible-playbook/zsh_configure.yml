@@ -1,0 +1,10 @@
+---
+- name: httpd configuration setup
+  hosts: appserv, dbserv, webserv
+  remote_user: ansadmin
+  become: true
+  tasks:
+        -  name: install zsh package
+           yum:
+               name: zsh
+               state: latest

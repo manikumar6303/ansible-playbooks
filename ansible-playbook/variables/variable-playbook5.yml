@@ -1,0 +1,20 @@
+---
+- name: Example of Varibles
+  hosts: localhost
+  gather_facts: no 
+  vars:
+        http_port: 80
+        user: admin
+        path: /tmp/oracle
+
+  tasks:
+      -  name: show variable values for mani
+         vars:
+              admin_user: mani
+              http_port: 90
+         debug:
+            msg: "port is {{http_port}}, user is {{admin_user}}"
+      
+      -  name: show variable values for admin
+         debug:
+            msg: "port is {{http_port}}, user is {{user}}, path is {{path}}"

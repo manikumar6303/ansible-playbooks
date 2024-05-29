@@ -1,0 +1,56 @@
+---
+- name: file system configuration
+  hosts: appserv, dbserv, webserv
+  remote_user: ansadmin
+  become: true
+  vars:
+      vol_grp: datavg
+      log_vol: datalv
+      phy_vol: /dev/sdb1
+      lv_path: /dev/datavg/datalv
+      mou: /data
+      sz: 100%FREE
+      ft: ext4
+  tasks:
+        -  name: creating disk 
+           vars:
+               dev: /dev/sdb
+               la: gpt
+               num: 1
+               pt: primary
+               ps: 0%
+               pe: 100%
+               fl: [ lvm ]
+           parted: 
+                  device: '{{ dev }}'
+                  label: '{{ la }}'
+                  number: '{{ num }}'
+                  part_type: '{{ pt }}'
+                  part_start: '{{ ps }}'
+                  part_end: '{{ pe }}'
+                  flags: '{{ fl }}'
+                  state: present
+        -  name: install lvm2 dependency
+           package:
+                   name: lvm2
+                   state: present
+        -  name: configuring volume groups
+           lvg:
+               vg: '{{vol_grp}}'
+               pvs: '{{phy_vol}}'
+               state: present
+        -  name: configuring logical volumes
+           lvol:
+               vg: '{{vol_grp}}'
+               lv: '{{log_vol}}'
+               size: '{{sz}}'
+        -  name: configuring file system
+           filesystem:
+                      fstype: '{{ft}}'
+                      dev: '{{lv_path}}'
+        -  name: mounting the file system
+           mount:
+                 path: '{{mou}}'
+                 src: '{{lv_path}}'
+                 fstype: '{{ft}}'
+                 state: mounted

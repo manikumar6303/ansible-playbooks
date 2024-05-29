@@ -1,0 +1,7 @@
+---
+- name: Kernel Parameters Setup
+  hosts: clients
+  remote_user: ansadmin
+  become: true
+  roles:
+        - kernel_parameter_setup

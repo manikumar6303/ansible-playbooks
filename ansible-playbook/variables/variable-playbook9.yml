@@ -1,0 +1,12 @@
+---
+- name: Example of Varibles
+  hosts: localhost
+  gather_facts: no 
+  vars:
+      http_port: 443
+      user: mani
+      path: /tmp/oracle
+  tasks:
+      -  name: show variable values
+         debug:
+            msg: "port is {{http_port}}, username is {{user}}, path is {{path}}"

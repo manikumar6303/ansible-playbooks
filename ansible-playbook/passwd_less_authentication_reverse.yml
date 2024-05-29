@@ -1,0 +1,41 @@
+---
+- name: Removing Password Less Authentication mani-ans-serv
+  hosts: appserv
+  remote_user: ansadmin
+  become: true
+  tasks:
+        -  name: Removing id_rsa.pub from authorized keys
+           lineinfile:
+                      path: /home/ashok/.ssh/authorized_keys
+                      regexp: 'mani-ans-serv'
+                      state: absent
+- name: Removing Password Less Authentication mani-ans-client1
+  hosts: dbserv
+  remote_user: ansadmin
+  become: true
+  tasks:
+        -  name: Removing id_rsa.pub from authorized keys
+           lineinfile:
+                      path: /home/ashok/.ssh/authorized_keys
+                      regexp: 'mani-ans-client1'
+                      state: absent
+        -  name: Removing id_rsa.pub from authorized keys
+           lineinfile: 
+                      path: /home/ashok/.ssh/authorized_keys
+                      regexp: 'mani-ans-serv'
+                      state: absent
+- name: Removing Password Less Authentication mani-ans-client2
+  hosts: webserv
+  remote_user: ansadmin
+  become: true
+  tasks:
+        -  name: Removing id_rsa.pub from authorized keys
+           lineinfile:
+                      path: /home/ashok/.ssh/authorized_keys
+                      regexp: 'mani-ans-client1'
+                      state: absent
+        -  name: Removing id_rsa.pub from authorized keys
+           lineinfile: 
+                      path: /home/ashok/.ssh/authorized_keys
+                      regexp: 'mani-ans-serv'
+                      state: absent

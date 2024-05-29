@@ -1,0 +1,45 @@
+---
+- name: file system extension
+  hosts: appserv, dbserv, webserv
+  remote_user: ansadmin
+  become: true
+  tasks:
+        -  name: partition the newly added disk
+           vars:
+               dev: /dev/sdc
+               la: gpt
+               num: 1
+               pt: primary
+               ps: 0%
+               pe: 100%
+               fl: [ lvm ]
+           parted: 
+                  device: '{{ dev }}'
+                  label: '{{ la }}'
+                  number: '{{ num }}'
+                  part_type: '{{ pt }}'
+                  part_start: '{{ ps }}'
+                  part_end: '{{ pe }}'
+                  flags: '{{ fl }}'
+                  state: present
+        -  name: extending the volume group
+           vars:
+               vol_grp: datavg
+               phy_vol: 
+                       p1: /dev/sdb1
+                       p2: /dev/sdc1
+           lvg:
+               vg: '{{vol_grp}}'
+               pvs:
+                   - '{{phy_vol.p1}}'
+                   - '{{phy_vol.p2}}'
+        -  name: extending the logical volume
+           vars:
+               vol_grp: datavg
+               log_vol: datalv
+               sz: +100%FREE
+           lvol:
+                vg: '{{vol_grp}}'
+                lv: '{{log_vol}}'
+                size: '{{sz}}'
+                resizefs: yes

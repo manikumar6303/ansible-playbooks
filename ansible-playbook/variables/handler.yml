@@ -1,0 +1,33 @@
+---
+- name: Configuring the tomcat
+  hosts: ownserver, clients
+  remote_user: ansadmin
+  become: true
+  vars:
+      pac_ser1: tomcat
+      pac_ser2: httpd
+  tasks:
+        -  name: Installing {{ pac_ser1 }} package
+           yum:
+              name: '{{ pac_ser1 }}'
+              state: present
+        -  name: Enabling and starting the {{ pac_ser1 }} service 
+           service:
+                  name: '{{ pac_ser1 }}'
+                  enabled: yes
+                  state: started
+           notify: Restart httpd service         
+        -  name: Installing {{ pac_ser2 }} package
+           yum:
+              name: '{{ pac_ser2 }}'
+              state: present
+        -  name: Enabling and starting the {{ pac_ser2 }} service 
+           service:
+                  name: '{{ pac_ser2 }}'
+                  enabled: yes
+                  state: started
+  handlers:
+          - name: Restart httpd service
+            service:
+                    name: '{{ pac_ser2 }}'
+                    state: restarted 

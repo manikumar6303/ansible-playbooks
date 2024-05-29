@@ -1,0 +1,108 @@
+---
+- name: Package Installation
+  hosts: dbserv, webserv
+  remote_user: ansadmin
+  become: true
+  tasks:
+        -  name: installing the nfs-util,autofs packages
+           yum:
+               name:
+                    - nfs-utils
+                    - autofs
+               state: present
+        -  name: enabling and starting the nfs service
+           service:
+                    name: nfs
+                    enabled: yes
+                    state: started
+        -  name: enabling and starting the autofs service
+           service:
+                    name: autofs
+                    enabled: yes
+                    state: started
+- name: Mounting in mani-ans-client1
+  hosts: dbserv
+  remote_user: ansadmin
+  become: true
+  tasks:
+        -  name: hard mount
+           mount:
+                 path: /sai-webdata1
+                 src: saikiransrv2:/saiwebdata1
+                 fstype: nfs
+                 state: mounted
+        -  name: add entries into /etc/auto.master configuration file
+           lineinfile:
+                      path: /etc/auto.master 
+                      line: /-          /etc/auto.direct        --timeout=60
+                      state: present
+        -  name: add entries into /etc/auto.master configuration file
+           lineinfile:
+                      path: /etc/auto.master
+                      line: /private          /etc/auto.indirect        --timeout=60
+                      state: present
+        -  name: create the /etc/auto.direct file
+           file:
+                path: /etc/auto.direct
+                state: touch
+        -  name: create the /etc/auto.indirect file
+           file:
+                path: /etc/auto.indirect
+                state: touch
+        -  name: add entries into /etc/auto.direct file
+           lineinfile:
+                      path: /etc/auto.direct
+                      line: /sai-webdata2       -rw,sync,intr   saikiransrv2:/saiwebdata2
+                      state: present
+        -  name: add entries into /etc/auto.indirect file
+           lineinfile:
+                      path: /etc/auto.indirect
+                      line: sai-webdata3       -rw,sync,intr   saikiransrv2:/saiwebdata3
+                      state: present
+        -  name: restarting the autofs service
+           service:
+                   name: autofs
+                   state: reloaded
+- name: mounting in mani-ans-client2
+  hosts: webserv
+  remote_user: ansadmin
+  become: true
+  tasks:
+        -  name: hard mount
+           mount:
+                 path: /sai-webdata1
+                 src: saikiransrv3:/saiwebdata1
+                 fstype: nfs
+                 state: mounted
+        -  name: add entries into /etc/auto.master configuration file
+           lineinfile:
+                      path: /etc/auto.master
+                      line: /-          /etc/auto.direct        --timeout=60
+                      state: present
+        -  name: add entries into /etc/exports configuration file
+           lineinfile:
+                      path: /etc/auto.master 
+                      line: /private          /etc/auto.indirect        --timeout=60
+                      state: present
+        -  name: create the /etc/auto.direct file
+           file:
+                path: /etc/auto.direct
+                state: touch
+        -  name: create the /etc/auto.indirect file
+           file:
+                path: /etc/auto.indirect
+                state: touch
+        -  name: add entries into /etc/auto.direct file
+           lineinfile:
+                      path: /etc/auto.direct
+                      line: /sai-webdata2       -rw,sync,intr   saikiransrv3:/saiwebdata2
+                      state: present
+        -  name: add entries into /etc/auto.indirect file
+           lineinfile:
+                      path: /etc/auto.indirect
+                      line: sai-webdata3       -rw,sync,intr   saikiransrv3:/saiwebdata3
+                      state: present
+        -  name: restarting the autofs service
+           service:
+                   name: autofs
+                   state: reloaded

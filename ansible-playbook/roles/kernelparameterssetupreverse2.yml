@@ -1,0 +1,7 @@
+---
+- name: Kernel Parameters Setup Reverse 2 Method
+  hosts: clients
+  remote_user: ansadmin
+  become: true
+  roles:
+        - kernel_parameter_setup_reverse2

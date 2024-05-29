@@ -1,0 +1,7 @@
+---
+- name: file system configuration
+  hosts: clients
+  remote_user: ansadmin
+  become: true
+  roles:
+        - fs_setup
